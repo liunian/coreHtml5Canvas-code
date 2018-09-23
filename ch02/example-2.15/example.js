@@ -95,10 +95,6 @@ function updateRubberbandRectangle(loc) {
 
    if (loc.y > mousedown.y) rubberbandRect.top = mousedown.y;
    else                     rubberbandRect.top = loc.y;
-
-   context.save();
-   context.strokeStyle = 'red';
-   context.restore();
 }
 
 function drawRubberbandShape(loc) {
