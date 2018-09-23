@@ -4,7 +4,7 @@
  *
  * License:
  *
- * Permission is hereby granted, free of charge, to any person 
+ * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation files
  * (the "Software"), to deal in the Software without restriction,
  * including without limitation the rights to use, copy, modify, merge,
@@ -42,7 +42,7 @@ var canvas = document.getElementById('canvas'),
     GRID_VERTICAL_SPACING = 10,
 
     drawingSurfaceImageData,
-   
+
     cursor = new TextCursor(),
     paragraph;
 
@@ -51,7 +51,7 @@ var canvas = document.getElementById('canvas'),
 function drawBackground() {
    var STEP_Y = 12,
        i = context.canvas.height;
-   
+
    context.strokeStyle = 'rgba(0,0,200,0.225)';
    context.lineWidth = 0.5;
 
@@ -83,8 +83,8 @@ function drawBackground() {
 function windowToCanvas(canvas, x, y) {
    var bbox = canvas.getBoundingClientRect();
 
-   return { x: x - bbox.left * (canvas.width  / bbox.width),
-            y: y - bbox.top  * (canvas.height / bbox.height)
+   return { x: (x - bbox.left) * (canvas.width  / bbox.width),
+            y: (y - bbox.top)  * (canvas.height / bbox.height)
           };
 }
 
@@ -144,7 +144,7 @@ document.onkeydown = function (e) {
       // so only suppress that call for backspace and enter.
       e.preventDefault();
    }
-   
+
    if (e.keyCode === 8) {  // backspace
       paragraph.backspace();
    }
@@ -152,7 +152,7 @@ document.onkeydown = function (e) {
       paragraph.newline();
    }
 }
-   
+
 document.onkeypress = function (e) {
    var key = String.fromCharCode(e.which);
 

@@ -89,8 +89,8 @@ function windowToCanvas(e) {
        y = e.y || e.clientY,
        bbox = canvas.getBoundingClientRect();
 
-   return { x: x - bbox.left * (canvas.width  / bbox.width),
-            y: y - bbox.top  * (canvas.height / bbox.height)
+   return { x: (x - bbox.left) * (canvas.width  / bbox.width),
+            y: (y - bbox.top)  * (canvas.height / bbox.height)
           };
 }
 

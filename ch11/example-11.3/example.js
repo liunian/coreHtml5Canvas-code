@@ -4,7 +4,7 @@
  *
  * License:
  *
- * Permission is hereby granted, free of charge, to any person 
+ * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation files
  * (the "Software"), to deal in the Software without restriction,
  * including without limitation the rights to use, copy, modify, merge,
@@ -33,7 +33,7 @@ var canvas = document.getElementById('canvas'),
     context = canvas.getContext('2d'),
 
     image = new Image(),
-    imageData = null, 
+    imageData = null,
     dragging = false,
 
     instructions = document.getElementById('instructions'),
@@ -74,17 +74,17 @@ var canvas = document.getElementById('canvas'),
 
 function windowToCanvas(x, y) {
    var bbox = canvas.getBoundingClientRect();
-   return { x: x - bbox.left * (canvas.width  / bbox.width),
-            y: y - bbox.top  * (canvas.height / bbox.height)
+   return { x: (x - bbox.left) * (canvas.width  / bbox.width),
+            y: (y - bbox.top)  * (canvas.height / bbox.height)
           };
 };
 
-function calculateMagnifyRectangle(mouse) { 
+function calculateMagnifyRectangle(mouse) {
    var top,
        left,
        bottom,
        right;
-   
+
    magnifyRectangle.x = mouse.x - magnifyingGlassRadius;
    magnifyRectangle.y = mouse.y - magnifyingGlassRadius;
    magnifyRectangle.width = magnifyingGlassRadius*2 + 2*context.lineWidth;
@@ -94,7 +94,7 @@ function calculateMagnifyRectangle(mouse) {
    left = magnifyRectangle.x;
    bottom = magnifyRectangle.y + magnifyRectangle.height;
    right = magnifyRectangle.x + magnifyRectangle.width;
-   
+
    if (left < 0) {
       magnifyRectangle.width += left;
       magnifyRectangle.x = 0;
@@ -160,13 +160,13 @@ function drawMagnifyingGlassCircle(mouse) {
    this.context.lineWidth = gradientThickness;
    this.context.strokeStyle = 'rgba(0,0,0,0.06)';
    this.context.stroke();
-   
+
    this.context.restore();
 };
 
-function drawMagnifyingGlass(mouse) { 
+function drawMagnifyingGlass(mouse) {
    var scaledMagnifyRectangle;
-   
+
 
    if (window.netscape) {
       if (netscape.security.PrivilegeManager)
@@ -174,7 +174,7 @@ function drawMagnifyingGlass(mouse) {
    }
    magnifyingGlassX = mouse.x;
    magnifyingGlassY = mouse.y;
-   
+
    calculateMagnifyRectangle(mouse);
 
    imageData = context.getImageData(magnifyRectangle.x,
@@ -220,17 +220,17 @@ function drawGlassIcon(context, radius) {
       context.save();
       context.clearRect(0,0,context.canvas.width,
                             context.canvas.height);
-   
+
       context.shadowColor = 'rgba(52, 72, 35, 0.5)';
       context.shadowOffsetX = 1;
       context.shadowOffsetY = 1;
       context.shadowBlur = 2;
-  
+
       context.beginPath();
 
-      context.translate(context.canvas.width/2, 
+      context.translate(context.canvas.width/2,
                             context.canvas.height/2);
- 
+
       context.beginPath();
       context.lineWidth = 2.5;
       context.arc(0, 0, radius+3, 0, Math.PI*2, false);
@@ -246,7 +246,7 @@ function drawGlassIcon(context, radius) {
       context.restore();
    };
 
-function drawMagnificationText(value, percent) { 
+function drawMagnificationText(value, percent) {
    scaleOutput.innerHTML = value;
    percent = percent < 0.35 ? 0.35 : percent;
    scaleOutput.style.fontSize = percent*MAXIMUM_SCALE/2 + 'em';
@@ -259,11 +259,11 @@ function updateMagnifyingGlass() {
 
 function step(time, lastTime, mouse, speed) {
    var elapsedTime = time - lastTime,
-       nextLeft = mouse.x - magnifyingGlassRadius + speed.vx*(elapsedTime/10), 
+       nextLeft = mouse.x - magnifyingGlassRadius + speed.vx*(elapsedTime/10),
        nextTop = mouse.y - magnifyingGlassRadius + speed.vy*(elapsedTime/10),
        nextRight = nextLeft + magnifyingGlassRadius*2,
        nextBottom = nextTop + magnifyingGlassRadius*2;
-        
+
    eraseMagnifyingGlass();
 
    if (nextLeft < 0) {
@@ -327,7 +327,7 @@ function isDragging (e) {
    return changed === 1 && touching === 1;
 }
 
-canvas.ontouchstart = function (e) { 
+canvas.ontouchstart = function (e) {
    var changed = e.changedTouches.length,
        touching = e.touches.length;
 
@@ -347,7 +347,7 @@ canvas.ontouchstart = function (e) {
    }
 };
 
-canvas.ontouchmove = function (e) { 
+canvas.ontouchmove = function (e) {
    var changed = e.changedTouches.length,
        touching = e.touches.length,
        distance, touch1, touch2;
@@ -374,30 +374,30 @@ canvas.ontouchmove = function (e) {
    }
 };
 
-canvas.ontouchend = function (e) { 
+canvas.ontouchend = function (e) {
    e.preventDefault(e);
    mouseUpOrTouchEnd(windowToCanvas(e.pageX, e.pageY));
 };
 
 // Mouse Event Handlers........................................
 
-canvas.onmousedown = function (e) { 
+canvas.onmousedown = function (e) {
    e.preventDefault(e);
    mouseDownOrTouchStart(windowToCanvas(e.clientX, e.clientY));
 };
 
-canvas.onmousemove = function (e) { 
+canvas.onmousemove = function (e) {
    e.preventDefault(e);
    mouseMoveOrTouchMove(windowToCanvas(e.clientX, e.clientY));
 };
 
-canvas.onmouseup = function (e) { 
+canvas.onmouseup = function (e) {
    e.preventDefault(e);
    mouseUpOrTouchEnd(windowToCanvas(e.clientX, e.clientY));
 };
 
 function mouseDownOrTouchStart(mouse) {
-   mousedown = { x: mouse.x, y: mouse.y, time: (new Date).getTime() }; 
+   mousedown = { x: mouse.x, y: mouse.y, time: (new Date).getTime() };
 
    if (animating) {
       animating = false;
@@ -418,7 +418,7 @@ function mouseMoveOrTouchMove(mouse) {
 };
 
 function mouseUpOrTouchEnd(mouse) {
-   mouseup = { x: mouse.x, y: mouse.y, time: (new Date).getTime() }; 
+   mouseup = { x: mouse.x, y: mouse.y, time: (new Date).getTime() };
 
    if (dragging) {
       if (didThrow()) {
@@ -556,15 +556,15 @@ if (window.matchMedia && screen.width <= 1024) {
       draw();
    }
 
-   m.addListener( listener ); 
+   m.addListener( listener );
 }
 
 instructionsOkay.onclick = function (e) {
-   instructions.style.display = 'none';   
+   instructions.style.display = 'none';
 };
 
 instructionsNoMore.onclick = function (e) {
-   instructions.style.display = 'none';   
+   instructions.style.display = 'none';
    localStorage['corehtml5:magnifying-glass:instructions']= 'no';
 };
 

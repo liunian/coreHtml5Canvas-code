@@ -4,7 +4,7 @@
  *
  * License:
  *
- * Permission is hereby granted, free of charge, to any person 
+ * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation files
  * (the "Software"), to deal in the Software without restriction,
  * including without limitation the rights to use, copy, modify, merge,
@@ -50,7 +50,7 @@ var canvas = document.getElementById('canvas'),
     TICK_SHORT_STROKE_STYLE = 'rgba(100, 140, 230, 0.7)',
 
     TEXT_MARGIN = 135,
-   
+
     TRACKING_DIAL_STROKING_STYLE = 'rgba(100, 140, 230, 0.5)',
 
     GUIDEWIRE_STROKE_STYLE = 'goldenrod',
@@ -67,8 +67,8 @@ var canvas = document.getElementById('canvas'),
 
 function windowToCanvas(canvas, x, y) {
    var bbox = canvas.getBoundingClientRect();
-   return { x: x - bbox.left * (canvas.width  / bbox.width),
-            y: y - bbox.top  * (canvas.height / bbox.height)
+   return { x: (x - bbox.left) * (canvas.width  / bbox.width),
+            y: (y - bbox.top)  * (canvas.height / bbox.height)
           };
 }
 
@@ -78,7 +78,7 @@ function drawGrid(color, stepx, stepy) {
    context.shadowColor = undefined;
    context.shadowOffsetX = 0;
    context.shadowOffsetY = 0;
-   
+
    context.strokeStyle = color;
    context.fillStyle = '#ffffff';
    context.lineWidth = 0.5;
@@ -142,7 +142,7 @@ function drawHand(loc) {
                 y: circle.y - radius * Math.sin(angle)
       };
    }
-   
+
    context.save();
 
    context.strokeStyle = GUIDEWIRE_STROKE_STYLE;
@@ -175,8 +175,8 @@ function drawDegreeAnnotations() {
 
    context.save();
    context.fillStyle = DEGREE_ANNOTATIONS_FILL_STYLE;
-   context.font = DEGREE_ANNOTATIONS_TEXT_SIZE + 'px Arial'; 
-   
+   context.font = DEGREE_ANNOTATIONS_TEXT_SIZE + 'px Arial';
+
    for (var angle=Math.PI/2, i=0; i < 60; angle += Math.PI/6, i+=5) {
       context.beginPath();
       context.fillText(i,
@@ -185,14 +185,14 @@ function drawDegreeAnnotations() {
    }
    context.restore();
 }
-   
+
 function drawDegreeDialTicks() {
    var radius = circle.radius + DEGREE_DIAL_MARGIN,
        ANGLE_MAX = 2*Math.PI,
        ANGLE_DELTA = Math.PI/64;
 
    context.save();
-   
+
    for (var angle = 0, cnt = 0; angle < ANGLE_MAX; angle += ANGLE_DELTA, ++cnt) {
       context.beginPath();
 
@@ -242,7 +242,7 @@ function drawTrackingDial() {
 
 function drawDial() {
    var loc = {x: circle.x, y: circle.y};
-   
+
    drawCentroid();
    drawHand(loc);
 
@@ -264,7 +264,7 @@ function drawDial() {
 function redraw() {
   context.clearRect(0, 0, canvas.width, canvas.height);
   drawGrid('lightgray', 10, 10);
-  drawDial(); 
+  drawDial();
 }
 
 function animate() {

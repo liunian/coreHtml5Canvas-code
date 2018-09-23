@@ -4,7 +4,7 @@
  *
  * License:
  *
- * Permission is hereby granted, free of charge, to any person 
+ * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation files
  * (the "Software"), to deal in the Software without restriction,
  * including without limitation the rights to use, copy, modify, merge,
@@ -35,7 +35,7 @@
  *
  * License:
  *
- * Permission is hereby granted, free of charge, to any person 
+ * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation files
  * (the "Software"), to deal in the Software without restriction,
  * including without limitation the rights to use, copy, modify, merge,
@@ -64,7 +64,7 @@ var COREHTML5 = COREHTML5 || {};
 
 // Key Constructor....................................................................
 
-COREHTML5.Key = function (text) { 
+COREHTML5.Key = function (text) {
    this.text = text;
    this.selected = false;
    this.translucent = false;
@@ -120,7 +120,7 @@ COREHTML5.Key.prototype = {
 
       return keyGradient;
    },
-   
+
    setKeyProperties: function (context, keyGradient) {
 	   context.shadowColor = 'rgba(0, 0, 0, 0.8)';
 	   context.shadowOffsetX = 1;
@@ -132,7 +132,7 @@ COREHTML5.Key.prototype = {
       context.strokeStyle = 'rgba(0, 0, 0, 0.7)';
       context.fillStyle = keyGradient;
    },
-      
+
    setTextProperties: function (context) {
 	   context.shadowColor = undefined;
 	   context.shadowOffsetX = 0;
@@ -142,10 +142,10 @@ COREHTML5.Key.prototype = {
       context.textAlign = 'center';
       context.textBaseline = 'middle';
    },
-      
+
    draw: function (context) {
       var keyGradient = this.createKeyGradient(context);
-      
+
       context.save();
 
       this.createPath(context);
@@ -174,7 +174,7 @@ COREHTML5.Key.prototype = {
    toggleSelection: function (context) {
       this.selected = !this.selected;
    },
-   
+
    isPointInKey: function (context, x, y) {
       this.createPath(context);
       return context.isPointInPath(x, y);
@@ -188,12 +188,12 @@ COREHTML5.Key.prototype = {
       this.selected = false;
    },
 }
-   
+
 // Keyboard Constructor...............................................................
 
 COREHTML5.Keyboard = function() {
    var keyboard = this;
-   
+
    this.keys = [
        [ new COREHTML5.Key('Q'), new COREHTML5.Key('W'), new COREHTML5.Key('E'),
          new COREHTML5.Key('R'), new COREHTML5.Key('T'), new COREHTML5.Key('Y'),
@@ -217,7 +217,7 @@ COREHTML5.Keyboard = function() {
    this.KEYBOARD_HEIGHT = 360,
    this.KEY_COLUMNS = 11,
    this.KEY_ROWS = 4,
-   
+
    this.createCanvas();
    this.createDOMElement();
 
@@ -239,7 +239,7 @@ COREHTML5.Keyboard = function() {
 
       e.preventDefault(); // prevents flashing on iPad
    };
-   
+
    return this;
 }
 
@@ -251,16 +251,16 @@ COREHTML5.Keyboard.prototype = {
 
    windowToCanvas: function (canvas, x, y) {
       var bbox = canvas.getBoundingClientRect();
-      return { x: x - bbox.left * (canvas.width  / bbox.width),
-               y: y - bbox.top  * (canvas.height / bbox.height)
+      return { x: (x - bbox.left) * (canvas.width  / bbox.width),
+               y: (y - bbox.top)  * (canvas.height / bbox.height)
              };
    },
-   
+
    createCanvas: function () {
       var canvas = document.createElement('canvas');
       this.context = canvas.getContext('2d');
    },
-   
+
    createDOMElement: function () {
       this.domElement = document.createElement('div');
       this.domElement.appendChild(this.context.canvas);
@@ -327,7 +327,7 @@ COREHTML5.Keyboard.prototype = {
          }
       }
    },
-   
+
    draw: function (context) {
       var originalContext, key;
 
@@ -338,7 +338,7 @@ COREHTML5.Keyboard.prototype = {
 
       this.context.save();
       this.drawKeys();
-      
+
       if (context) {
          this.context = originalContext;
       }
@@ -376,7 +376,7 @@ COREHTML5.Keyboard.prototype = {
       key.height = keyHeight;
       key.cornerRadius = 5;
    },
-   
+
    createKeys: function() {
       var key,
           keyMargin,
@@ -405,7 +405,7 @@ COREHTML5.Keyboard.prototype = {
 
    getKeyForLocation: function (context, loc) {
       var key;
-      
+
       for (var row=0; row < this.keys.length; ++row) {
          for (var col=0; col < this.keys[row].length; ++col) {
             key = this.keys[row][col];
@@ -421,7 +421,7 @@ COREHTML5.Keyboard.prototype = {
    shiftKeyPressed: function (context) {
       for (var row=0; row < this.keys.length; ++row) {
          for (var col=0; col < this.keys[row].length; ++col) {
-            nextKey = this.keys[row][col]; 
+            nextKey = this.keys[row][col];
 
             if (nextKey.text === '^') {
                nextKey.toggleSelection();
@@ -443,13 +443,13 @@ COREHTML5.Keyboard.prototype = {
 
       this.fireKeyEvent(key);
    },
-   
+
    // Key listeners.....................................................................
 
    addKeyListener: function (listenerFunction) {
       this.keyListenerFunctions.push(listenerFunction);
    },
-   
+
    fireKeyEvent: function (key) {
       for (var i=0; i < this.keyListenerFunctions.length; ++i) {
          this.keyListenerFunctions[i](this.shifted ? key.text : key.text.toLowerCase());

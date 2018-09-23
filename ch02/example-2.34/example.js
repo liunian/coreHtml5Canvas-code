@@ -4,7 +4,7 @@
  *
  * License:
  *
- * Permission is hereby granted, free of charge, to any person 
+ * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation files
  * (the "Software"), to deal in the Software without restriction,
  * including without limitation the rights to use, copy, modify, merge,
@@ -50,7 +50,7 @@ var canvas = document.getElementById('canvas'),
     GRID_VERTICAL_SPACING = 10,
     GRID_LINE_COLOR = 'lightblue',
     drawingSurfaceImageData,
-   
+
     lastX,
     lastY,
     mousedown = {},
@@ -87,8 +87,8 @@ function drawGrid(color, stepx, stepy) {
 
 function windowToCanvas(x, y) {
    var bbox = canvas.getBoundingClientRect();
-   return { x: x - bbox.left * (canvas.width  / bbox.width),
-            y: y - bbox.top  * (canvas.height / bbox.height)
+   return { x: (x - bbox.left) * (canvas.width  / bbox.width),
+            y: (y - bbox.top)  * (canvas.height / bbox.height)
           };
 }
 
@@ -115,18 +115,18 @@ function updateRubberbandRectangle(loc) {
 
    if (loc.y > mousedown.y) rubberbandRect.top = mousedown.y;
    else                     rubberbandRect.top = loc.y;
-} 
+}
 
 function drawRubberbandShape(loc) {
    var angle = Math.atan(rubberbandRect.height/rubberbandRect.width),
        radius = rubberbandRect.height / Math.sin(angle);
-   
+
    if (mousedown.y === loc.y) {
-      radius = Math.abs(loc.x - mousedown.x); 
+      radius = Math.abs(loc.x - mousedown.x);
    }
 
    context.beginPath();
-   context.arc(mousedown.x, mousedown.y, radius, 0, Math.PI*2, false); 
+   context.arc(mousedown.x, mousedown.y, radius, 0, Math.PI*2, false);
    context.stroke();
    context.fill();
 }
@@ -165,7 +165,7 @@ function drawGuidewires(x, y) {
 
 function setDrawPathForEraser(loc) {
    var eraserWidth = parseFloat(eraserWidthSelect.value);
-   
+
    context.beginPath();
 
    if (eraserShapeSelect.value === 'circle') {
@@ -183,7 +183,7 @@ function setDrawPathForEraser(loc) {
 
 function setErasePathForEraser() {
    var eraserWidth = parseFloat(eraserWidthSelect.value);
-   
+
    context.beginPath();
 
    if (eraserShapeSelect.value === 'circle') {
@@ -203,7 +203,7 @@ function setErasePathForEraser() {
 function setEraserAttributes() {
   context.lineWidth     = ERASER_LINE_WIDTH;
   context.shadowColor   = ERASER_SHADOW_STYLE;
-  context.shadowOffsetX = ERASER_SHADOW_OFFSET; 
+  context.shadowOffsetX = ERASER_SHADOW_OFFSET;
   context.shadowOffsetY = ERASER_SHADOW_OFFSET;
   context.shadowBlur    = ERASER_SHADOW_BLUR;
   context.strokeStyle   = ERASER_STROKE_STYLE;
@@ -223,7 +223,7 @@ function eraseLast() {
 function drawEraser(loc) {
    context.save();
 
-   setEraserAttributes();     
+   setEraserAttributes();
    setDrawPathForEraser(loc);
    context.stroke();
 
@@ -234,7 +234,7 @@ function drawEraser(loc) {
 
 canvas.onmousedown = function (e) {
    var loc = windowToCanvas(e.clientX, e.clientY);
-   
+
    e.preventDefault(); // prevent cursor change
 
    if (drawRadio.checked) {
@@ -246,12 +246,12 @@ canvas.onmousedown = function (e) {
 
    lastX = loc.x;
    lastY = loc.y;
-   
+
    dragging = true;
 };
 
 canvas.onmousemove = function (e) {
-   var loc; 
+   var loc;
 
    if (dragging) {
       e.preventDefault(); // prevent selections
@@ -286,7 +286,7 @@ canvas.onmouseup = function (e) {
    if (eraserRadio.checked) {
       eraseLast();
    }
-   
+
    dragging = false;
 };
 

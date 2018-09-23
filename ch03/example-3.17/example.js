@@ -4,7 +4,7 @@
  *
  * License:
  *
- * Permission is hereby granted, free of charge, to any person 
+ * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation files
  * (the "Software"), to deal in the Software without restriction,
  * including without limitation the rights to use, copy, modify, merge,
@@ -54,7 +54,7 @@ var canvas = document.getElementById('canvas'),
 function drawBackground() { // Ruled paper
    var STEP_Y = 12,
        i = context.canvas.height;
-   
+
    context.strokeStyle = 'rgba(0,0,200,0.225)';
    context.lineWidth = 0.5;
 
@@ -82,8 +82,8 @@ function drawBackground() { // Ruled paper
 
 function windowToCanvas(x, y) {
    var bbox = canvas.getBoundingClientRect();
-   return { x: x - bbox.left * (canvas.width  / bbox.width),
-            y: y - bbox.top  * (canvas.height / bbox.height)
+   return { x: (x - bbox.left) * (canvas.width  / bbox.width),
+            y: (y - bbox.top)  * (canvas.height / bbox.height)
           };
 }
 
@@ -105,7 +105,7 @@ function blinkCursor(x, y) {
    clearInterval(blinkingInterval);
    blinkingInterval = setInterval( function (e) {
    cursor.erase(context, drawingSurfaceImageData);
-      
+
       setTimeout( function (e) {
          if (cursor.left == x &&
             cursor.top + cursor.getHeight(context) == y) {
@@ -154,7 +154,7 @@ document.onkeydown = function (e) {
       // so only suppress that call for backspace and enter.
       e.preventDefault();
    }
-   
+
    if (e.keyCode === 8) {  // backspace
       context.save();
 
@@ -169,7 +169,7 @@ document.onkeydown = function (e) {
       context.restore();
    }
 }
-   
+
 document.onkeypress = function (e) {
    var key = String.fromCharCode(e.which);
 

@@ -4,7 +4,7 @@
  *
  * License:
  *
- * Permission is hereby granted, free of charge, to any person 
+ * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation files
  * (the "Software"), to deal in the Software without restriction,
  * including without limitation the rights to use, copy, modify, merge,
@@ -63,8 +63,8 @@ function windowToCanvas(e) {
        y = e.y || e.clientY,
        bbox = canvas.getBoundingClientRect();
 
-   return { x: x - bbox.left * (canvas.width  / bbox.width),
-            y: y - bbox.top  * (canvas.height / bbox.height)
+   return { x: (x - bbox.left) * (canvas.width  / bbox.width),
+            y: (y - bbox.top)  * (canvas.height / bbox.height)
           };
 };
 
@@ -80,7 +80,7 @@ function detectCollisions() {
        numShapes = shapes.length,
        shape,
        i;
-   
+
    if (shapeBeingDragged) {
       for(i = 0; i < numShapes; ++i) {
          shape = shapes[i];
@@ -107,7 +107,7 @@ canvas.onmousedown = function (e) {
          mousedown.y = location.y;
          lastdrag.x = location.x;
          lastdrag.y = location.y;
-      }   
+      }
    });
 }
 
@@ -122,7 +122,7 @@ canvas.onmousemove = function (e) {
                    };
 
       shapeBeingDragged.move(dragVector.x, dragVector.y);
-      
+
       lastdrag.x = location.x;
       lastdrag.y = location.y;
 
@@ -135,7 +135,7 @@ canvas.onmousemove = function (e) {
 canvas.onmouseup = function (e) {
    shapeBeingDragged = undefined;
 }
-   
+
 for (var i=0; i < polygonPoints.length; ++i) {
    var polygon = new Polygon(),
        points = polygonPoints[i];

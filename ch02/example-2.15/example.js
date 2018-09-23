@@ -4,7 +4,7 @@
  *
  * License:
  *
- * Permission is hereby granted, free of charge, to any person 
+ * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation files
  * (the "Software"), to deal in the Software without restriction,
  * including without limitation the rights to use, copy, modify, merge,
@@ -68,8 +68,8 @@ function drawGrid(color, stepx, stepy) {
 
 function windowToCanvas(x, y) {
    var bbox = canvas.getBoundingClientRect();
-   return { x: x - bbox.left * (canvas.width  / bbox.width),
-            y: y - bbox.top  * (canvas.height / bbox.height) };
+   return { x: (x - bbox.left) * (canvas.width  / bbox.width),
+            y: (y - bbox.top)  * (canvas.height / bbox.height) };
 }
 
 // Save and restore drawing surface...................................
@@ -99,7 +99,7 @@ function updateRubberbandRectangle(loc) {
    context.save();
    context.strokeStyle = 'red';
    context.restore();
-} 
+}
 
 function drawRubberbandShape(loc) {
    context.beginPath();
@@ -142,7 +142,7 @@ function drawGuidewires(x, y) {
 
 canvas.onmousedown = function (e) {
    var loc = windowToCanvas(e.clientX, e.clientY);
-   
+
    e.preventDefault(); // prevent cursor change
 
    saveDrawingSurface();
@@ -152,7 +152,7 @@ canvas.onmousedown = function (e) {
 };
 
 canvas.onmousemove = function (e) {
-   var loc; 
+   var loc;
 
    if (dragging) {
       e.preventDefault(); // prevent selections
@@ -179,7 +179,7 @@ canvas.onmouseup = function (e) {
 eraseAllButton.onclick = function (e) {
    context.clearRect(0, 0, canvas.width, canvas.height);
    drawGrid('lightgray', 10, 10);
-   saveDrawingSurface(); 
+   saveDrawingSurface();
 };
 
 strokeStyleSelect.onchange = function (e) {

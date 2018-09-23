@@ -4,7 +4,7 @@
  *
  * License:
  *
- * Permission is hereby granted, free of charge, to any person 
+ * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation files
  * (the "Software"), to deal in the Software without restriction,
  * including without limitation the rights to use, copy, modify, merge,
@@ -45,7 +45,7 @@ var iconCanvas = document.getElementById('iconCanvas'),
     curveInstructionsNoMoreButton = document.getElementById('curveInstructionsNoMoreButton'),
 
     showCurveInstructions = true,
-   
+
     drawingSurfaceImageData,
     rubberbandW,
     rubberbandH,
@@ -61,7 +61,7 @@ var iconCanvas = document.getElementById('iconCanvas'),
     draggingControlPoint = false,
     curveStart = {},
     curveEnd = {},
-   
+
     doFill = false,
     selectedRect = null,
     selectedFunction,
@@ -72,7 +72,7 @@ var iconCanvas = document.getElementById('iconCanvas'),
     CONTROL_POINT_RADIUS = 20,
     CONTROL_POINT_FILL_STYLE = 'rgba(255,255,0,0.5)',
     CONTROL_POINT_STROKE_STYLE = 'rgba(0, 0, 255, 0.8)',
-   
+
     RUBBERBAND_LINE_WIDTH = 1,
     RUBBERBAND_STROKE_STYLE = 'green',
 
@@ -173,7 +173,7 @@ function drawLineIcon(rect) {
 function drawRectIcon(rect) {
    fillIconLowerRight(rect);
    iconContext.strokeRect(rect.x + 5, rect.y + 5,
-                          rect.w - 10, rect.h - 10); 
+                          rect.w - 10, rect.h - 10);
 }
 
 function drawCircleIcon(rect) {
@@ -216,7 +216,7 @@ function drawCurveIcon(rect) {
 
 function drawTextIcon(rect) {
    var text = TEXT_ICON_TEXT;
-   
+
    fillIconLowerRight(rect);
    iconContext.fillStyle = TEXT_ICON_FILL_STYLE;
    iconContext.fillText(text, rect.x + rect.w/2,
@@ -227,7 +227,7 @@ function drawTextIcon(rect) {
 
 function drawSlinkyIcon(rect) {
    var x, y;
-   
+
    fillIconLowerRight(rect);
 
    iconContext.save();
@@ -238,7 +238,7 @@ function drawSlinkyIcon(rect) {
       else              x = rect.x + rect.w/3 + (rect.w/3 - i) + rect.w/8;
 
       y = rect.y + rect.w/3 + i;
-      
+
       iconContext.beginPath();
       iconContext.arc(x, y, 12, 0, Math.PI*2, false);
       iconContext.stroke();
@@ -271,7 +271,7 @@ function drawIcon(rect) {
    iconContext.strokeStyle = ICON_BORDER_STROKE_STYLE;
    iconContext.strokeRect(rect.x, rect.y, rect.w, rect.h);
    iconContext.strokeStyle = ICON_STROKE_STYLE;
-   
+
    if (rect.y === ICON_RECTANGLES[LINE_ICON].y)             drawLineIcon(rect);
    else if (rect.y === ICON_RECTANGLES[RECTANGLE_ICON].y)   drawRectIcon(rect);
    else if (rect.y === ICON_RECTANGLES[CIRCLE_ICON].y)      drawCircleIcon(rect);
@@ -288,7 +288,7 @@ function drawIcon(rect) {
 function drawIcons() {
    iconContext.clearRect(0,0, iconCanvas.width,
                               iconCanvas.height);
-   
+
    ICON_RECTANGLES.forEach(function(rect) {
       iconContext.save();
 
@@ -335,11 +335,11 @@ function fillIconLowerRight(rect) {
 }
 
 function isPointInIconLowerRight(rect, x, y) {
-   iconContext.beginPath();   
+   iconContext.beginPath();
    iconContext.moveTo(rect.x + rect.w, rect.y);
    iconContext.lineTo(rect.x + rect.w, rect.y + rect.h);
    iconContext.lineTo(rect.x, rect.y + rect.h);
-            
+
    return iconContext.isPointInPath(x, y);
 }
 
@@ -407,12 +407,12 @@ function updateRubberbandRectangle(loc) {
 
    if (loc.y > mousedown.y) rubberbandUlhc.y = mousedown.y;
    else                     rubberbandUlhc.y = loc.y;
-} 
+}
 
 function drawRubberbandRectangle() {
    drawingContext.strokeRect(rubberbandUlhc.x,
                              rubberbandUlhc.y,
-                             rubberbandW, rubberbandH); 
+                             rubberbandW, rubberbandH);
 }
 
 function drawRubberbandLine(loc) {
@@ -425,13 +425,13 @@ function drawRubberbandLine(loc) {
 function drawRubberbandCircle(loc) {
    var angle = Math.atan(rubberbandH/rubberbandW);
    var radius = rubberbandH / Math.sin(angle);
-   
+
    if (mousedown.y === loc.y) {
-      radius = Math.abs(loc.x - mousedown.x); 
+      radius = Math.abs(loc.x - mousedown.x);
    }
 
    drawingContext.beginPath();
-   drawingContext.arc(mousedown.x, mousedown.y, radius, 0, Math.PI*2, false); 
+   drawingContext.arc(mousedown.x, mousedown.y, radius, 0, Math.PI*2, false);
    drawingContext.stroke();
 }
 
@@ -440,7 +440,7 @@ function drawRubberband(loc) {
 
    drawingContext.strokeStyle = RUBBERBAND_STROKE_STYLE;
    drawingContext.lineWidth   = RUBBERBAND_LINE_WIDTH;
-   
+
    if (selectedFunction === 'rectangle') {
       drawRubberbandRectangle();
    }
@@ -448,7 +448,7 @@ function drawRubberband(loc) {
             selectedFunction === 'curve') {
       drawRubberbandLine(loc);
    }
-   else if (selectedFunction === 'circle') { 
+   else if (selectedFunction === 'circle') {
       drawRubberbandCircle(loc);
    }
 
@@ -468,7 +468,7 @@ function setPathForEraser() {
 function setSlinkyAttributes() {
   drawingContext.lineWidth     = lineWidthSelect.value;
   drawingContext.shadowColor   = strokeStyleSelect.value;
-  drawingContext.shadowOffsetX = SLINKY_SHADOW_OFFSET; 
+  drawingContext.shadowOffsetX = SLINKY_SHADOW_OFFSET;
   drawingContext.shadowOffsetY = SLINKY_SHADOW_OFFSET;
   drawingContext.shadowBlur    = SLINKY_SHADOW_BLUR;
   drawingContext.strokeStyle   = strokeStyleSelect.value;
@@ -477,7 +477,7 @@ function setSlinkyAttributes() {
 function setEraserAttributes() {
   drawingContext.lineWidth     = ERASER_LINE_WIDTH;
   drawingContext.shadowColor   = ERASER_SHADOW_STYLE;
-  drawingContext.shadowOffsetX = ERASER_SHADOW_OFFSET; 
+  drawingContext.shadowOffsetX = ERASER_SHADOW_OFFSET;
   drawingContext.shadowOffsetY = ERASER_SHADOW_OFFSET;
   drawingContext.shadowBlur    = ERASER_SHADOW_BLUR;
   drawingContext.strokeStyle   = ERASER_STROKE_STYLE;
@@ -510,7 +510,7 @@ function eraseLast() {
 
 function drawEraser(loc) {
    drawingContext.save();
-   setEraserAttributes();     
+   setEraserAttributes();
 
    drawingContext.beginPath();
    drawingContext.arc(loc.x, loc.y, ERASER_RADIUS,
@@ -523,7 +523,7 @@ function drawEraser(loc) {
 
 function drawSlinky(loc) {
    drawingContext.save();
-   setSlinkyAttributes();     
+   setSlinkyAttributes();
 
    drawingContext.beginPath();
    drawingContext.arc(loc.x, loc.y, ERASER_RADIUS,
@@ -544,7 +544,7 @@ function drawSlinky(loc) {
 
 // Finish drawing lines, circles, and rectangles.................
 
-function finishDrawingLine(loc) {   
+function finishDrawingLine(loc) {
    drawingContext.beginPath();
    drawingContext.moveTo(mousedown.x, mousedown.y);
    drawingContext.lineTo(loc.x, loc.y);
@@ -554,14 +554,14 @@ function finishDrawingLine(loc) {
 function finishDrawingCircle(loc) {
    var angle = Math.atan(rubberbandH/rubberbandW),
        radius = rubberbandH / Math.sin(angle);
-   
+
    if (mousedown.y === loc.y) {
-      radius = Math.abs(loc.x - mousedown.x); 
+      radius = Math.abs(loc.x - mousedown.x);
    }
 
    drawingContext.beginPath();
    drawingContext.arc(mousedown.x, mousedown.y,
-                      radius, 0, Math.PI*2, false); 
+                      radius, 0, Math.PI*2, false);
 
    if (doFill) {
       drawingContext.fill();
@@ -575,11 +575,11 @@ function finishDrawingRectangle() {
       if (doFill) {
         drawingContext.fillRect(rubberbandUlhc.x,
                                 rubberbandUlhc.y,
-                                rubberbandW, rubberbandH) 
+                                rubberbandW, rubberbandH)
       }
       drawingContext.strokeRect(rubberbandUlhc.x,
                                 rubberbandUlhc.y,
-                                rubberbandW, rubberbandH); 
+                                rubberbandW, rubberbandH);
    }
 }
 
@@ -595,7 +595,7 @@ function drawControlPoint() {
    drawingContext.beginPath();
    drawingContext.arc(controlPoint.x, controlPoint.y,
                       CONTROL_POINT_RADIUS, 0, Math.PI*2, false);
-   drawingContext.stroke(); 
+   drawingContext.stroke();
    drawingContext.fill();
 
    drawingContext.restore();
@@ -634,7 +634,7 @@ function drawCurve() {
 function finishDrawingCurve() {
    drawingCanvas.style.cursor = 'crosshair';
    restoreDrawingSurface();
-   drawCurve(); 
+   drawCurve();
 
    if (doFill) {
       drawingContext.fill();
@@ -696,8 +696,8 @@ function hideKeyboard() {
 
 function windowToCanvas(canvas, x, y) {
    var bbox = canvas.getBoundingClientRect();
-   return { x: x - bbox.left * (canvas.width  / bbox.width),
-            y: y - bbox.top  * (canvas.height / bbox.height)
+   return { x: (x - bbox.left) * (canvas.width  / bbox.width),
+            y: (y - bbox.top)  * (canvas.height / bbox.height)
           };
 }
 
@@ -711,7 +711,7 @@ function mouseDownOrTouchStartInControlCanvas(loc) {
       editingCurve = false;
       restoreDrawingSurface();
    }
-  
+
    ICON_RECTANGLES.forEach(function(rect) {
       iconContext.beginPath();
 
@@ -762,7 +762,7 @@ document.onkeydown = function (e) {
       enter();
    }
 }
-   
+
 document.onkeypress = function (e) {
    var key = String.fromCharCode(e.which);
 
@@ -799,7 +799,7 @@ function drawTextCursor() {
 }
 
 function startDrawingText() {
-   editingText = true; 
+   editingText = true;
    currentText = '';
    drawTextCursor();
    showKeyboard();
@@ -830,17 +830,17 @@ function mouseDownOrTouchStartInDrawingCanvas(loc) {
       saveDrawingSurface();
       mousedown.x = loc.x;
       mousedown.y = loc.y;
-   
+
       if (selectedFunction === 'path' || selectedFunction === 'pathClosed') {
          drawingContext.beginPath();
-         drawingContext.moveTo(loc.x, loc.y);               
+         drawingContext.moveTo(loc.x, loc.y);
       }
       else if (selectedFunction === 'text') {
          startDrawingText();
       }
       else {
          editingText = false;
-      }      
+      }
 
       lastX = loc.x;
       lastY = loc.y;
@@ -884,12 +884,12 @@ function mouseMoveOrTouchMoveInDrawingCanvas(loc) {
       else { // For lines, circles, rectangles, and curves, draw rubberbands
          restoreDrawingSurface();
          updateRubberbandRectangle(loc);
-         drawRubberband(loc);   
+         drawRubberband(loc);
       }
 
       lastX = loc.x;
       lastY = loc.y;
-   
+
       lastRect.w = rubberbandW;
       lastRect.h = rubberbandH;
    }
@@ -906,7 +906,7 @@ function mouseMoveOrTouchMoveInDrawingCanvas(loc) {
 function endPath(loc) {
    drawingContext.lineTo(loc.x, loc.y);
    drawingContext.stroke();
-                 
+
    if (selectedFunction === 'pathClosed') {
       drawingContext.closePath();
 
@@ -928,11 +928,11 @@ function mouseUpOrTouchEndInDrawingCanvas(loc) {
       draggingControlPoint = false;
    }
    else if (dragging) {
-      if (selectedFunction === 'erase') { 
-         eraseLast(); 
+      if (selectedFunction === 'erase') {
+         eraseLast();
       }
       else if (selectedFunction === 'path' ||
-               selectedFunction === 'pathClosed') { 
+               selectedFunction === 'pathClosed') {
          endPath(loc);
       }
       else {
@@ -955,7 +955,7 @@ iconCanvas.onmousedown = function (e) {
    e.preventDefault();
    mouseDownOrTouchStartInControlCanvas(loc);
 }
-   
+
 iconCanvas.addEventListener('touchstart', function (e) {
    if (e.touches.length === 1) {
       e.preventDefault();
@@ -976,7 +976,7 @@ drawingCanvas.onmousedown = function (e) {
       windowToCanvas(drawingCanvas, x, y));
 }
 
-drawingCanvas.ontouchstart = function (e) { 
+drawingCanvas.ontouchstart = function (e) {
    if (e.touches.length === 1) {
       e.preventDefault();
       mouseDownOrTouchStartInDrawingCanvas(
@@ -985,7 +985,7 @@ drawingCanvas.ontouchstart = function (e) {
    }
 }
 
-drawingCanvas.ontouchmove = function (e) { 
+drawingCanvas.ontouchmove = function (e) {
    if (e.touches.length === 1) {
       mouseMoveOrTouchMoveInDrawingCanvas(
          windowToCanvas(drawingCanvas,
@@ -993,9 +993,9 @@ drawingCanvas.ontouchmove = function (e) {
    }
 }
 
-drawingCanvas.ontouchend = function (e) { 
+drawingCanvas.ontouchend = function (e) {
    var loc;
-   
+
    if (e.changedTouches.length === 1) {
       loc = windowToCanvas(drawingCanvas, e.changedTouches[0].clientX, e.changedTouches[0].clientY);
       mouseUpOrTouchEndInDrawingCanvas(loc);
@@ -1129,12 +1129,12 @@ if (mql.addListener) alert('found'); else alert('nope');
 
 function listener(mql) { alert ('...'); }
 
-mql.addListener( listener ); 
+mql.addListener( listener );
 listener(mql);
 */
 
 keyboard.appendTo('keyboard');
-keyboard.addKeyListener( function (key) { 
+keyboard.addKeyListener( function (key) {
    if (key === 'Enter') enter();
    else if (key === '<') backspace();
    else insert(key);

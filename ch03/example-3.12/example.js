@@ -4,7 +4,7 @@
  *
  * License:
  *
- * Permission is hereby granted, free of charge, to any person 
+ * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation files
  * (the "Software"), to deal in the Software without restriction,
  * including without limitation the rights to use, copy, modify, merge,
@@ -71,8 +71,8 @@ function windowToCanvas(e) {
        y = e.y || e.clientY,
        bbox = canvas.getBoundingClientRect();
 
-   return { x: x - bbox.left * (canvas.width  / bbox.width),
-            y: y - bbox.top  * (canvas.height / bbox.height)
+   return { x: (x - bbox.left) * (canvas.width  / bbox.width),
+            y: (y - bbox.top)  * (canvas.height / bbox.height)
           };
 }
 
@@ -124,7 +124,7 @@ saveDrawingSurface();
 function drawBackground() {
    var STEP_Y = 12,
        i = context.canvas.height;
-   
+
    context.strokeStyle = 'rgba(0,0,200,0.225)';
    context.lineWidth = 0.5;
 

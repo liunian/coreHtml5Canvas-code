@@ -4,7 +4,7 @@
  *
  * License:
  *
- * Permission is hereby granted, free of charge, to any person 
+ * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation files
  * (the "Software"), to deal in the Software without restriction,
  * including without limitation the rights to use, copy, modify, merge,
@@ -41,7 +41,7 @@ var canvas = document.getElementById('canvas'),
     sidesSelect = document.getElementById('sidesSelect'),
 
     drawingSurfaceImageData,
-   
+
     mousedown = {},
     rubberbandRect = {},
 
@@ -71,7 +71,7 @@ function drawGrid(color, stepx, stepy) {
    context.shadowColor = undefined;
    context.shadowOffsetX = 0;
    context.shadowOffsetY = 0;
-   
+
    context.strokeStyle = color;
    context.fillStyle = '#ffffff';
    context.lineWidth = 0.5;
@@ -96,8 +96,8 @@ function drawGrid(color, stepx, stepy) {
 
 function windowToCanvas(x, y) {
    var bbox = canvas.getBoundingClientRect();
-   return { x: x - bbox.left * (canvas.width  / bbox.width),
-            y: y - bbox.top  * (canvas.height / bbox.height)
+   return { x: (x - bbox.left) * (canvas.width  / bbox.width),
+            y: (y - bbox.top)  * (canvas.height / bbox.height)
           };
 }
 
@@ -124,11 +124,11 @@ function updateRubberbandRectangle(loc) {
 
    if (loc.y > mousedown.y) rubberbandRect.top = mousedown.y;
    else                     rubberbandRect.top = loc.y;
-} 
+}
 
 function drawRubberbandShape(loc, sides, startAngle) {
    var polygon = new Polygon(mousedown.x, mousedown.y,
-                     rubberbandRect.width, 
+                     rubberbandRect.width,
                      parseInt(sidesSelect.value),
                      (Math.PI / 180) * parseInt(startAngleSelect.value),
                      context.strokeStyle,
@@ -230,7 +230,7 @@ canvas.onmouseup = function (e) {
 eraseAllButton.onclick = function (e) {
    context.clearRect(0, 0, canvas.width, canvas.height);
    drawGrid('lightgray', 10, 10);
-   saveDrawingSurface(); 
+   saveDrawingSurface();
 };
 
 strokeStyleSelect.onchange = function (e) {

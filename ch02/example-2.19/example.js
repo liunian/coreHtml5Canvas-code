@@ -4,7 +4,7 @@
  *
  * License:
  *
- * Permission is hereby granted, free of charge, to any person 
+ * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation files
  * (the "Software"), to deal in the Software without restriction,
  * including without limitation the rights to use, copy, modify, merge,
@@ -39,7 +39,7 @@ var canvas = document.getElementById('canvas'),
     guidewireCheckbox = document.getElementById('guidewireCheckbox'),
 
     drawingSurfaceImageData,
-   
+
     mousedown = {},
     rubberbandRect = {},
     dragging = false,
@@ -76,8 +76,8 @@ function drawGrid(color, stepx, stepy) {
 function windowToCanvas(x, y) {
    var bbox = canvas.getBoundingClientRect();
 
-   return { x: x - bbox.left * (canvas.width  / bbox.width),
-            y: y - bbox.top  * (canvas.height / bbox.height)
+   return { x: (x - bbox.left) * (canvas.width  / bbox.width),
+            y: (y - bbox.top)  * (canvas.height / bbox.height)
           };
 }
 
@@ -104,7 +104,7 @@ function updateRubberbandRectangle(loc) {
 
    if (loc.y > mousedown.y) rubberbandRect.top = mousedown.y;
    else                     rubberbandRect.top = loc.y;
-} 
+}
 
 function drawRubberbandShape(loc) {
    var angle,
@@ -113,7 +113,7 @@ function drawRubberbandShape(loc) {
    if (mousedown.y === loc.y) { // horizontal line
       // Horizontal lines are a special case. See the else
       // block for an explanation
-      
+
       radius = Math.abs(loc.x - mousedown.x);
    }
    else {
@@ -126,7 +126,7 @@ function drawRubberbandShape(loc) {
    }
 
    context.beginPath();
-   context.arc(mousedown.x, mousedown.y, radius, 0, Math.PI*2, false); 
+   context.arc(mousedown.x, mousedown.y, radius, 0, Math.PI*2, false);
    context.stroke();
 
    if (fillCheckbox.checked)
@@ -167,7 +167,7 @@ function drawGuidewires(x, y) {
 
 canvas.onmousedown = function (e) {
    var loc = windowToCanvas(e.clientX, e.clientY);
-   
+
    e.preventDefault(); // prevent cursor change
 
    saveDrawingSurface();
@@ -177,7 +177,7 @@ canvas.onmousedown = function (e) {
 };
 
 canvas.onmousemove = function (e) {
-   var loc; 
+   var loc;
 
    if (dragging) {
       e.preventDefault(); // prevent selections
@@ -205,7 +205,7 @@ canvas.onmouseup = function (e) {
 eraseAllButton.onclick = function (e) {
    context.clearRect(0, 0, canvas.width, canvas.height);
    drawGrid('lightgray', 10, 10);
-   saveDrawingSurface(); 
+   saveDrawingSurface();
 };
 
 strokeStyleSelect.onchange = function (e) {

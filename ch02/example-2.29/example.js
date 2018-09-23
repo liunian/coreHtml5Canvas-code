@@ -4,7 +4,7 @@
  *
  * License:
  *
- * Permission is hereby granted, free of charge, to any person 
+ * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation files
  * (the "Software"), to deal in the Software without restriction,
  * including without limitation the rights to use, copy, modify, merge,
@@ -39,27 +39,27 @@ var canvas = document.getElementById('canvas'),
     instructionsNoMoreButton = document.getElementById('instructionsNoMoreButton'),
 
     showInstructions = true,
-   
+
     GRID_STROKE_STYLE = 'lightblue',
     GRID_SPACING = 10,
-   
+
     CONTROL_POINT_RADIUS = 5,
     CONTROL_POINT_STROKE_STYLE = 'blue',
     CONTROL_POINT_FILL_STYLE = 'rgba(255, 255, 0, 0.5)',
 
     END_POINT_STROKE_STYLE = 'navy',
     END_POINT_FILL_STYLE   = 'rgba(0, 255, 0, 0.5)',
- 
+
     GUIDEWIRE_STROKE_STYLE = 'rgba(0,0,230,0.4)',
 
     drawingImageData,      // Image data stored on mouse down events
-   
+
     mousedown = {},        // Cursor location for last mouse down event
     rubberbandRect = {},   // Constantly updated for mouse move events
 
     dragging = false,      // If true, user is dragging the cursor
     draggingPoint = false, // End- or control-point the user is dragging
-   
+
     endPoints     = [ {}, {} ],  // end point locations (x, y)
     controlPoints = [ {}, {} ],  // control point locations (x, y)
     editing  = false,            // If true, user is editing the curve
@@ -95,8 +95,8 @@ function drawGrid(color, stepx, stepy) {
 function windowToCanvas(x, y) {
    var bbox = canvas.getBoundingClientRect();
 
-   return { x: x - bbox.left * (canvas.width  / bbox.width),
-            y: y - bbox.top  * (canvas.height / bbox.height)
+   return { x: (x - bbox.left) * (canvas.width  / bbox.width),
+            y: (y - bbox.top)  * (canvas.height / bbox.height)
           };
 }
 
@@ -122,7 +122,7 @@ function updateRubberbandRectangle(loc) {
 
    if (loc.y > mousedown.y) rubberbandRect.top = mousedown.y;
    else                     rubberbandRect.top = loc.y;
-} 
+}
 
 function drawBezierCurve() {
    context.beginPath();
@@ -252,7 +252,7 @@ function cursorInControlPoint(loc) {
 
    controlPoints.forEach( function(point) {
       context.beginPath();
-      context.arc(point.x, point.y, 
+      context.arc(point.x, point.y,
                   CONTROL_POINT_RADIUS, 0, Math.PI*2, false);
 
       if (context.isPointInPath(loc.x, loc.y)) {
@@ -284,7 +284,7 @@ canvas.onmousedown = function (e) {
    }
    else {
       draggingPoint = cursorInControlPoint(loc);
-      
+
       if (!draggingPoint) {
          draggingPoint = cursorInEndPoint(loc);
       }
@@ -302,7 +302,7 @@ canvas.onmousemove = function (e) {
          drawGuidewires(loc.x, loc.y);
       }
    }
-   
+
    if (dragging) {
       updateRubberband(loc);
       drawControlAndEndPoints();
@@ -343,7 +343,7 @@ eraseAllButton.onclick = function (e) {
    context.clearRect(0, 0, canvas.width, canvas.height);
    drawGrid(GRID_STROKE_STYLE, GRID_SPACING, GRID_SPACING);
 
-   saveDrawingSurface(); 
+   saveDrawingSurface();
 
    editing = false;
    dragging = false;

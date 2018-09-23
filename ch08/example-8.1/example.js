@@ -4,7 +4,7 @@
  *
  * License:
  *
- * Permission is hereby granted, free of charge, to any person 
+ * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation files
  * (the "Software"), to deal in the Software without restriction,
  * including without limitation the rights to use, copy, modify, merge,
@@ -59,8 +59,8 @@ function windowToCanvas(e) {
        y = e.y || e.clientY,
        bbox = canvas.getBoundingClientRect();
 
-   return { x: x - bbox.left * (canvas.width  / bbox.width),
-            y: y - bbox.top  * (canvas.height / bbox.height)
+   return { x: (x - bbox.left) * (canvas.width  / bbox.width),
+            y: (y - bbox.top)  * (canvas.height / bbox.height)
           };
 };
 
@@ -71,12 +71,12 @@ function getBoundingBox(ball) {
             height: ball.height
           };
 }
-                      
+
 function handleEdgeCollisions() {
    var bbox = getBoundingBox(ball),
        right = bbox.left + bbox.width,
        bottom = bbox.top + bbox.height;
-      
+
    if (right > canvas.width || bbox.left < 0) {
       velocityX = -velocityX;
 
@@ -133,7 +133,7 @@ function animate(time) {
    }
    else {
      context.clearRect(0,0,canvas.width,canvas.height);
-   
+
      if (ballMoving) {
         elapsedTime = parseFloat(time - lastTime) / 1000;
 
@@ -142,7 +142,7 @@ function animate(time) {
 
         detectCollisions();
      }
-      
+
      lastTime = time;
 
      ball.paint(context);

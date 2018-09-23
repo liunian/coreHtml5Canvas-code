@@ -4,7 +4,7 @@
  *
  * License:
  *
- * Permission is hereby granted, free of charge, to any person 
+ * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation files
  * (the "Software"), to deal in the Software without restriction,
  * including without limitation the rights to use, copy, modify, merge,
@@ -57,7 +57,7 @@ var canvas = document.getElementById('canvas'),
 
     TRACKING_RING_STROKING_STYLE = 'rgba(100, 140, 230, 0.3)',
     drawingSurfaceImageData,
-   
+
     mousedown = {},
     rubberbandRect = {},
 
@@ -86,7 +86,7 @@ function drawGrid(color, stepx, stepy) {
    context.shadowBlur = 0;
    context.shadowOffsetX = 0;
    context.shadowOffsetY = 0;
-   
+
    context.strokeStyle = color;
    context.fillStyle = '#ffffff';
    context.lineWidth = 0.5;
@@ -114,8 +114,8 @@ function windowToCanvas(e) {
        y = e.y || e.clientY,
        bbox = canvas.getBoundingClientRect();
 
-   return { x: x - bbox.left * (canvas.width  / bbox.width),
-            y: y - bbox.top  * (canvas.height / bbox.height)
+   return { x: (x - bbox.left) * (canvas.width  / bbox.width),
+            y: (y - bbox.top)  * (canvas.height / bbox.height)
           };
 }
 
@@ -143,18 +143,18 @@ function updateRubberbandRectangle(loc) {
 
    if (loc.y > mousedown.y) rubberbandRect.top = mousedown.y;
    else                     rubberbandRect.top = loc.y;
-} 
+}
 
 function drawRubberbandShape(loc, sides, startAngle) {
    var polygon = new Polygon(mousedown.x, mousedown.y,
-                     rubberbandRect.width, 
+                     rubberbandRect.width,
                      parseInt(sidesSelect.value),
                      (Math.PI / 180) * parseInt(startAngleSelect.value),
                      context.strokeStyle,
                      context.fillStyle,
                      fillCheckbox.checked);
    drawPolygon(polygon);
-   
+
    if (!dragging) {
       polygons.push(polygon);
    }
@@ -230,7 +230,7 @@ function drawCentroidGuidewire(loc, polygon) {
                 y: polygon.y - radius * Math.sin(angle)
       };
    }
-   
+
    context.save();
    context.beginPath();
    context.moveTo(polygon.x, polygon.y);
@@ -257,8 +257,8 @@ function drawDegreeAnnotations(polygon) {
 
    context.save();
    context.fillStyle = DEGREE_ANNOTATIONS_FILL_STYLE;
-   context.font = DEGREE_ANNOTATIONS_TEXT_SIZE + 'px Helvetica'; 
-   
+   context.font = DEGREE_ANNOTATIONS_TEXT_SIZE + 'px Helvetica';
+
    for (var angle=0; angle < 2*Math.PI; angle += Math.PI/8) {
       context.beginPath();
       context.fillText((angle * 180 / Math.PI).toFixed(0),
@@ -267,14 +267,14 @@ function drawDegreeAnnotations(polygon) {
    }
    context.restore();
 }
-   
+
 function drawDegreeDialTicks(polygon) {
    var radius = polygon.radius + DEGREE_RING_MARGIN,
        ANGLE_MAX = 2*Math.PI,
        ANGLE_DELTA = Math.PI/64;
 
    context.save();
-   
+
    for (var angle = 0, cnt = 0; angle < ANGLE_MAX; angle += ANGLE_DELTA, ++cnt) {
       context.beginPath();
 
@@ -362,7 +362,7 @@ function drawPolygon(polygon, angle) {
 
    polygon.x = 0;
    polygon.y = 0;
-   
+
    polygon.createPath(context);
    context.stroke();
 
@@ -486,7 +486,7 @@ canvas.onmouseup = function (e) {
 eraseAllButton.onclick = function (e) {
    context.clearRect(0, 0, canvas.width, canvas.height);
    drawGrid('lightgray', 10, 10);
-   saveDrawingSurface(); 
+   saveDrawingSurface();
 };
 
 strokeStyleSelect.onchange = function (e) {
@@ -519,7 +519,7 @@ editCheckbox.onchange = function (e) {
    }
    else {
       stopEditing();
-   }  
+   }
 };
 
 // Initialization................................................

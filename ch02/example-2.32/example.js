@@ -4,7 +4,7 @@
  *
  * License:
  *
- * Permission is hereby granted, free of charge, to any person 
+ * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation files
  * (the "Software"), to deal in the Software without restriction,
  * including without limitation the rights to use, copy, modify, merge,
@@ -43,7 +43,7 @@ function drawText() {
    context.shadowBlur    = 10;
 
    context.fillStyle = 'cornflowerblue';
-   context.fillText('HTML5', 20, 250); 
+   context.fillText('HTML5', 20, 250);
 
    context.strokeStyle = 'yellow';
    context.strokeText('HTML5', 20, 250);
@@ -55,8 +55,8 @@ function drawText() {
 
 function windowToCanvas(canvas, x, y) {
    var bbox = canvas.getBoundingClientRect();
-   return { x: x - bbox.left * (canvas.width  / bbox.width),
-            y: y - bbox.top  * (canvas.height / bbox.height)
+   return { x: (x - bbox.left) * (canvas.width  / bbox.width),
+            y: (y - bbox.top)  * (canvas.height / bbox.height)
           };
 }
 

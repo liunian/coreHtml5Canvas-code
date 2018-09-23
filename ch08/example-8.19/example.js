@@ -4,7 +4,7 @@
  *
  * License:
  *
- * Permission is hereby granted, free of charge, to any person 
+ * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation files
  * (the "Software"), to deal in the Software without restriction,
  * including without limitation the rights to use, copy, modify, merge,
@@ -65,8 +65,8 @@ function windowToCanvas(e) {
        y = e.y || e.clientY,
        bbox = canvas.getBoundingClientRect();
 
-   return { x: x - bbox.left * (canvas.width  / bbox.width),
-            y: y - bbox.top  * (canvas.height / bbox.height)
+   return { x: (x - bbox.left) * (canvas.width  / bbox.width),
+            y: (y - bbox.top)  * (canvas.height / bbox.height)
           };
 };
 
@@ -83,7 +83,7 @@ function stick(mtv) {
        velocityMagnitude,
        point;
 
-   if (mtv.axis === undefined) { // The object that's moving is a circle. 
+   if (mtv.axis === undefined) { // The object that's moving is a circle.
       point = new Point();
       velocityMagnitude = Math.sqrt(Math.pow(velocity.x, 2) +
                                     Math.pow(velocity.y, 2));
@@ -99,7 +99,7 @@ function stick(mtv) {
    // Calclulate delta X and delta Y. The mtv.axis is a unit vector
    // indicating direction, and the overlap is the magnitude of
    // the translation vector.
-   
+
    dx = mtv.axis.x * mtv.overlap;
    dy = mtv.axis.y * mtv.overlap;
 
@@ -113,7 +113,7 @@ function stick(mtv) {
       dy = -dy;
 
    // In STICK_DELAY (500) ms, move the moving shape out of collision
-   
+
    setTimeout(function () {
       shapeMoving.move(dx, dy);
    }, STICK_DELAY);
@@ -134,7 +134,7 @@ function collisionDetected(mtv) {
 
 function detectCollisions() {
    var textY = 30, bbox, mtv;
-   
+
    if (shapeMoving) {
       shapes.forEach( function (shape) {
          if (shape !== shapeMoving) {
@@ -164,17 +164,17 @@ canvas.onmousedown = function (e) {
 
    if (showInstructions)
       showInstructions = false;
-   
+
    velocity.x = lastVelocity.x;
    velocity.y = lastVelocity.y;
 
    shapeMoving = undefined;
    stuck = false;
-   
+
    shapes.forEach( function (shape) {
       if (shape.isPointInPath(context, location.x, location.y)) {
          shapeMoving = shape;
-      }   
+      }
    });
 };
 
@@ -192,13 +192,13 @@ function animate(time) {
    }
 
    context.clearRect(0,0,canvas.width,canvas.height);
-   
+
    if (shapeMoving !== undefined) {
       elapsedTime = parseFloat(time - lastTime) / 1000;
       shapeMoving.move(velocity.x * elapsedTime,
                        velocity.y * elapsedTime);
    }
-      
+
    detectCollisions();
    drawShapes();
    lastTime = time;

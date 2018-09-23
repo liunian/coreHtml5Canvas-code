@@ -4,7 +4,7 @@
  *
  * License:
  *
- * Permission is hereby granted, free of charge, to any person 
+ * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation files
  * (the "Software"), to deal in the Software without restriction,
  * including without limitation the rights to use, copy, modify, merge,
@@ -60,7 +60,7 @@ var canvas = document.getElementById('canvas'),
     launchPadPainter = {
       LAUNCHPAD_FILL_STYLE: 'rgb(100,140,230)',
 
-      paint: function (ledge, context) { 
+      paint: function (ledge, context) {
          context.save();
          context.fillStyle = this.LAUNCHPAD_FILL_STYLE;
          context.fillRect(LAUNCHPAD_X, LAUNCHPAD_Y,
@@ -76,8 +76,8 @@ var canvas = document.getElementById('canvas'),
     ballPainter = {
       BALL_FILL_STYLE: 'rgb(255,255,0)',
       BALL_STROKE_STYLE: 'rgb(0,0,0,0.4)',
-      
-      paint: function (ball, context) { 
+
+      paint: function (ball, context) {
          context.save();
          context.shadowColor = undefined;
          context.lineWidth = 2;
@@ -96,11 +96,11 @@ var canvas = document.getElementById('canvas'),
     },
 
     // Lob behavior..............................................
-    
+
     lob = {
        lastTime: 0,
        GRAVITY_FORCE: 9.81, // m/s/s
-       
+
        applyGravity: function (elapsed) {
           ball.velocityY = (this.GRAVITY_FORCE * elapsed) -
                            (launchVelocity * Math.sin(launchAngle));
@@ -122,7 +122,7 @@ var canvas = document.getElementById('canvas'),
             reset();
          }
        },
-       
+
        execute: function (ball, context, time) {
           var updateDelta,
               elapsedFlightTime;
@@ -140,7 +140,7 @@ var canvas = document.getElementById('canvas'),
           this.lastTime = time;
        }
     },
-   
+
     ball = new Sprite('ball', ballPainter, [ lob ]),
     ballInFlight = false,
 
@@ -160,7 +160,7 @@ var canvas = document.getElementById('canvas'),
            score += lastScore;
            scoreboard.innerHTML = score;
        },
-       
+
        execute: function (bucket, context, time) {
           if (ballInFlight && this.ballInBucket()) {
               reset();
@@ -182,14 +182,14 @@ var canvas = document.getElementById('canvas'),
 
       [ catchBall ]
     );
-  
+
 // Functions.....................................................
 
 function windowToCanvas(x, y) {
    var bbox = canvas.getBoundingClientRect();
 
-   return { x: x - bbox.left * (canvas.width  / bbox.width),
-            y: y - bbox.top  * (canvas.height / bbox.height)
+   return { x: (x - bbox.left) * (canvas.width  / bbox.width),
+            y: (y - bbox.top)  * (canvas.height / bbox.height)
           };
 }
 
@@ -233,7 +233,7 @@ function drawGuidewire() {
 function updateBackgroundText() {
    if (lastScore == 3)        showText('Three pointer!');
    else if (lastScore == 2)   showText('Nice shot!');
-   else if (needInstructions) showText('Click to launch ball'); 
+   else if (needInstructions) showText('Click to launch ball');
 };
 
 function resetScoreLater() {
@@ -295,13 +295,13 @@ canvas.onmousemove = function (e) {
 
 function animate(time) {
    context.clearRect(0,0,canvas.width,canvas.height);
-   
+
    if (!ballInFlight) {
       drawGuidewire();
       updateBackgroundText();
 
       if (lastScore !== 0) { // just scored
-         resetScoreLater();      
+         resetScoreLater();
       }
    }
 
@@ -318,13 +318,13 @@ ball.height = ball.width;
 ball.left = LAUNCHPAD_X + LAUNCHPAD_WIDTH/2;
 ball.top = LAUNCHPAD_Y - ball.height/2;
 ball.radius = BALL_RADIUS;
- 
+
 context.lineWidth = 0.5;
 context.strokeStyle = 'rgba(0,0,0,0.5)';
 context.shadowColor = 'rgba(0,0,0,0.5)';
 context.shadowOffsetX = 2;
 context.shadowOffsetY = 2;
-context.shadowBlur = 4; 
+context.shadowBlur = 4;
 context.stroke();
 
 bucketImage.src = '../../shared/images/bucket.png';
