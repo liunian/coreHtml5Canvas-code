@@ -147,7 +147,7 @@ function updateRubberbandRectangle(loc) {
 
 function drawRubberbandShape(loc, sides, startAngle) {
    var polygon = new Polygon(mousedown.x, mousedown.y,
-                     rubberbandRect.width,
+                     Math.sqrt(rubberbandRect.width * rubberbandRect.width + rubberbandRect.height * rubberbandRect.height),
                      parseInt(sidesSelect.value),
                      (Math.PI / 180) * parseInt(startAngleSelect.value),
                      context.strokeStyle,

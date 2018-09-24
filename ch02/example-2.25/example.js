@@ -4,7 +4,7 @@
  *
  * License:
  *
- * Permission is hereby granted, free of charge, to any person 
+ * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation files
  * (the "Software"), to deal in the Software without restriction,
  * including without limitation the rights to use, copy, modify, merge,
@@ -41,7 +41,7 @@ var canvas = document.getElementById('canvas'),
     sidesSelect = document.getElementById('sidesSelect'),
 
     drawingSurfaceImageData,
-   
+
     mousedown = {},
     rubberbandRect = {},
     dragging = false,
@@ -117,7 +117,7 @@ function updateRubberbandRectangle(loc) {
 
    if (loc.y > mousedown.y) rubberbandRect.top = mousedown.y;
    else                     rubberbandRect.top = loc.y;
-} 
+}
 
 function getPolygonPoints(centerX, centerY, radius, sides, startAngle) {
    var points = [],
@@ -148,7 +148,7 @@ function createPolygonPath(centerX, centerY, radius, sides, startAngle) {
 
 function drawRubberbandShape(loc, sides, startAngle) {
    createPolygonPath(mousedown.x, mousedown.y,
-                     rubberbandRect.width, 
+                     Math.sqrt(rubberbandRect.width * rubberbandRect.width + rubberbandRect.height * rubberbandRect.height),
                      parseInt(sidesSelect.value),
                      (Math.PI / 180) * parseInt(startAngleSelect.value));
    context.stroke();
@@ -194,7 +194,7 @@ canvas.onmousedown = function (e) {
    var loc = windowToCanvas(e);
 
    saveDrawingSurface();
-   
+
    e.preventDefault(); // prevent cursor change
 
    saveDrawingSurface();
@@ -229,7 +229,7 @@ canvas.onmouseup = function (e) {
 eraseAllButton.onclick = function (e) {
    context.clearRect(0, 0, canvas.width, canvas.height);
    drawGrid('lightgray', 10, 10);
-   saveDrawingSurface(); 
+   saveDrawingSurface();
 };
 
 strokeStyleSelect.onchange = function (e) {
