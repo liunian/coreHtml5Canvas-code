@@ -213,6 +213,8 @@ canvas.onmousedown = function (e) {
    e.preventDefault(); // prevent cursor change
 
    if (editing) {
+     // 虽然 return，但由于是 forEach，所以是取最后一个包含点的 path。
+     // 在没有图层先后的前提下，最后的 path 绘在顶层，所以是取最顶层的图形
      polygons.forEach( function (polygon) {
         polygon.createPath(context);
         if (context.isPointInPath(loc.x, loc.y)) {
@@ -236,6 +238,8 @@ canvas.onmousemove = function (e) {
    e.preventDefault(); // prevent selections
 
    if (editing && dragging) {
+     // 虽然不太应该，但这里 dragging 同时充当了 boolean 以及当前拖拉中的路径实例；
+     // 编辑模式下，dragging 表示实例，这里是直接更新对应路径的 (x,y)，从而更新绘制的图形
       dragging.x = loc.x - draggingOffsetX;
       dragging.y = loc.y - draggingOffsetY;
 
